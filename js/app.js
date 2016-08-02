@@ -1,6 +1,12 @@
 'use strict.';
 
+//global variable to grab the canvas from html
+var resultsDisplay = document.getElementById('resultsDisplay').getContext('2d');
+
+
 var allProducts = [];
+
+var totalClicks = 0;
 
 function Product(name, path) {
   this.name = name;
@@ -31,26 +37,45 @@ new Product('usb', 'img/usb.jpg');
 new Product('waterCan', 'img/water-can.jpg');
 new Product('wineGlass', 'img/wine-glass.jpg');
 
-
-console.log(allProducts);
 var randomNumArray = [];
+
+//var used to account for the previously show pictures
+var previouslyShown = [];
 
 //this function generates three random numbers
 function threeRandomNumbers() {
-   randomNumArray = [];
-   randomNumArray.push(Math.floor(Math.random() * allProducts.length));
+  // console.log(previouslyShown + ' were the prior indexes');
+  randomNumArray = [];
+  randomNumArray.push(Math.floor(Math.random() * allProducts.length));
 
-   randomNumArray.push(Math.floor(Math.random() * allProducts.length));
-   while (randomNumArray[0] === randomNumArray[1]){
-     console.log("dup detected with second element.");
-     randomNumArray[1] = (Math.floor(Math.random() * allProducts.length));
-   }
-   randomNumArray.push(Math.floor(Math.random() * allProducts.length));
-   while (randomNumArray[1] === randomNumArray[2] || randomNumArray[0] === randomNumArray[2]){
-     console.log("dup detected with third element.");
-     randomNumArray[2] = (Math.floor(Math.random() * allProducts.length));
-   }
-   console.log(randomNumArray);
+  randomNumArray.push(Math.floor(Math.random() * allProducts.length));
+  while (randomNumArray[0] === randomNumArray[1]){
+    // console.log('dup detected with second element.');
+    randomNumArray[1] = (Math.floor(Math.random() * allProducts.length));
+  }
+  randomNumArray.push(Math.floor(Math.random() * allProducts.length));
+  while (randomNumArray[1] === randomNumArray[2] || randomNumArray[0] === randomNumArray[2]){
+    // console.log('dup detected with third element.');
+    randomNumArray[2] = (Math.floor(Math.random() * allProducts.length));
+  }
+  while (randomNumArray[0] === previouslyShown[0] ||
+        randomNumArray[0] === previouslyShown[1] ||
+        randomNumArray[0] === previouslyShown[2] ||
+        randomNumArray[1] === previouslyShown[0] ||
+        randomNumArray[1] === previouslyShown[1] ||
+        randomNumArray[1] === previouslyShown[2] ||
+        randomNumArray[2] === previouslyShown[0] ||
+        randomNumArray[2] === previouslyShown[1] ||
+        randomNumArray[2] === previouslyShown[2] ||
+        randomNumArray[0] === randomNumArray[1] ||
+        randomNumArray[1] === randomNumArray[2] ||
+        randomNumArray[0] === randomNumArray[2]) {
+    randomNumArray[0] = (Math.floor(Math.random() * allProducts.length));
+    randomNumArray[1] = (Math.floor(Math.random() * allProducts.length));
+    randomNumArray[2] = (Math.floor(Math.random() * allProducts.length));
+    console.log('had a match between old and new indexes');
+  }
+  // console.log(randomNumArray + ' are the current indexes');
 }
 
 //this function displays the images
@@ -59,44 +84,66 @@ function displayThreeImages(){
   //left
   var left = document.getElementById('left');
   left.src = allProducts[randomNumArray[0]].path;
+  left.alt = allProducts[randomNumArray[0]].name;
+  allProducts[randomNumArray[0]].views += 1;
+  // console.log(allProducts[randomNumArray[0]].name + ' has ' + allProducts[randomNumArray[0]].views + ' views');
 
   //center
   var center = document.getElementById('center');
   center.src = allProducts[randomNumArray[1]].path;
+  center.alt = allProducts[randomNumArray[1]].name;
+  allProducts[randomNumArray[1]].views += 1;
+  // console.log(allProducts[randomNumArray[1]].name + ' has ' + allProducts[randomNumArray[1]].views + ' views');
 
   //right
   var right = document.getElementById('right');
   right.src = allProducts[randomNumArray[2]].path;
+  right.alt = allProducts[randomNumArray[2]].name;
+  allProducts[randomNumArray[2]].views += 1;
+  // console.log(allProducts[randomNumArray[2]].name + ' has ' + allProducts[randomNumArray[2]].views + ' views');
 }
 
-//clears image upon clicking
-function clearClickedImage (event){
-  event.preventDefault();
-  event.target.style.visibility = 'hidden';
-  displayThreeImages();
+//tallies clicks of pictures
+function handleClick(event) {
+  // console.log(event.target); // tells us which DOM element was clicked
 
-}
+  if (event.target.id === 'photoSection') {
+    alert('Please click on a photo, not the empty space');
+    return;
+  }
 
-function tallyViews(){
-  displayThreeImages();
-  for (var i=0; i < allProducts.length; i++) {
-    if (allProducts[i].path === allProducts[randomNumArray[0]].path) {
-      allProducts[i].views +=1;
-      console.log(allProducts[i]);
-
-    }
-    if (allProducts[i].path === allProducts[randomNumArray[1]].path) {
-      allProducts[i].views +=1;
-      console.log(allProducts[i]);
-    }
-    if (allProducts[i].path === allProducts[randomNumArray[2]].path) {
-      allProducts[i].views +=1;
-      console.log(allProducts[i]);
+  for (var i = 0; i < allProducts.length; i++) {
+    if(event.target.alt === allProducts[i].name) {
+      allProducts[i].clicks += 1;
+      console.log(allProducts[i].name + ' has ' + allProducts[i].clicks + ' clicks');
     }
   }
+
+  //increments clicks
+  totalClicks += 1;
+  console.log('There have been ' + totalClicks + ' total clicks');
+
+  //stops the cycle at 25
+  if (totalClicks > 24) {
+    photoSection.removeEventListener('click', handleClick);
+    console.log('max number of clicks reached');
+    resultsButton.hidden = false;
+    return;
+  }
+
+  previouslyShown = randomNumArray;
+  displayThreeImages();
 }
 
+function handleResultsButton() {
+  alert('this is when you draw the chart');
+}
 
-left.addEventListener('click', clearClickedImage);
-center.addEventListener('click', clearClickedImage);
-right.addEventListener('click', clearClickedImage);
+// Executing code below
+displayThreeImages();
+
+var photoSection = document.getElementById('photoSection');
+photoSection.addEventListener('click', handleClick);
+
+var resultsButton = document.getElementById('resultsButton');
+resultsButton.addEventListener('click', handleResultsButton);
