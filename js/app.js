@@ -65,20 +65,17 @@ function displayThreeImages(){
   //right
   var right = document.getElementById('right');
   right.src = allProducts[randomNumArray[2]].path;
-
 }
-function handleEventClick(event) {
+
+function clearClickedImage (event){
   event.preventDefault();
-  //make code for when user clicks on image 1, 2, or 3
-  var leftClick = event.target.left.value;
-  var centerClick = event.target.center.value;
-  var rightClick = event.target.right.value;
-
-  if (!event.target.left.value || event.target.center.value || event.target.right.value) {
-    alert('You need to click on a picture!');
-  }
-
+  event.target.style.visibility = 'hidden';
 }
-  // =======.addEventListener('click', handleEventClic);
+
+
+left.addEventListener('click', clearClickedImage);
+center.addEventListener('click', clearClickedImage);
+right.addEventListener('click', clearClickedImage);
 
 displayThreeImages();
+console.log(displayThreeImages().left);
