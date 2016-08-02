@@ -35,9 +35,11 @@ new Product('wineGlass', 'img/wine-glass.jpg');
 console.log(allProducts);
 var randomNumArray = [];
 
+//this function generates three random numbers
 function threeRandomNumbers() {
    randomNumArray = [];
    randomNumArray.push(Math.floor(Math.random() * allProducts.length));
+
    randomNumArray.push(Math.floor(Math.random() * allProducts.length));
    while (randomNumArray[0] === randomNumArray[1]){
      console.log("dup detected with second element.");
@@ -51,7 +53,7 @@ function threeRandomNumbers() {
    console.log(randomNumArray);
 }
 
-
+//this function displays the images
 function displayThreeImages(){
   threeRandomNumbers();
   //left
@@ -67,15 +69,34 @@ function displayThreeImages(){
   right.src = allProducts[randomNumArray[2]].path;
 }
 
+//clears image upon clicking
 function clearClickedImage (event){
   event.preventDefault();
   event.target.style.visibility = 'hidden';
+  displayThreeImages();
+
+}
+
+function tallyViews(){
+  displayThreeImages();
+  for (var i=0; i < allProducts.length; i++) {
+    if (allProducts[i].path === allProducts[randomNumArray[0]].path) {
+      allProducts[i].views +=1;
+      console.log(allProducts[i]);
+
+    }
+    if (allProducts[i].path === allProducts[randomNumArray[1]].path) {
+      allProducts[i].views +=1;
+      console.log(allProducts[i]);
+    }
+    if (allProducts[i].path === allProducts[randomNumArray[2]].path) {
+      allProducts[i].views +=1;
+      console.log(allProducts[i]);
+    }
+  }
 }
 
 
 left.addEventListener('click', clearClickedImage);
 center.addEventListener('click', clearClickedImage);
 right.addEventListener('click', clearClickedImage);
-
-displayThreeImages();
-console.log(displayThreeImages().left);
