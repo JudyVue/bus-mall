@@ -6,7 +6,7 @@ img {
 
 section {
   position: relative;
-  border-style: solid;
+  border-style: none;
   width: 1000px;
   height: 200px;
 }
