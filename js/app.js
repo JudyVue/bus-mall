@@ -1,12 +1,13 @@
 'use strict.';
 
-
-
-
-
 var allProducts = [];
-
 var totalClicks = 0;
+var totalViewsArray = [];
+//vars to put votes and names of pictures for chart purposes
+var clicksArray = [];
+var imageNamesArray = [];
+var voteChart;
+
 
 
 function Product(name, path) {
@@ -124,7 +125,7 @@ function handleClick(event) {
 
 
   //stops the cycle at 25
-  if (totalClicks > 25) {
+  if (totalClicks > 5){
     photoSection.removeEventListener('click', handleClick);
     console.log('max number of clicks reached');
     resultsButton.hidden = false;
@@ -158,18 +159,14 @@ resultsButton.addEventListener('click', handleResultsButton);
 
 //pushes # of clicks and pic names into arrays
 
-//vars to put votes and names of pictures for chart purposes
-var clicksArray = [];
-var imageNamesArray = [];
-var chartDrawn = false; //not sure why this is here, but it's in sample code, so using it
-var voteChart;
 
 function updateChartArrays() {
   for (var i=0; i < allProducts.length; i++) {
     clicksArray[i] = allProducts[i].clicks;
     imageNamesArray[i] = allProducts[i].name;
-
-    console.log(imageNamesArray[i] + ' was clicked ' + clicksArray[i] + ' times.');
+    totalViewsArray[i] = allProducts[i].views;
+    console.log(imageNamesArray[i] + ' was clicked ' + clicksArray[i] + ' times and viewed ' + totalViewsArray[i] + ' times.');
+    console.log(totalViewsArray);
   }
 
 }
