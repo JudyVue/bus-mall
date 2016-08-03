@@ -8,7 +8,39 @@ var clicksArray = [];
 var imageNamesArray = [];
 var voteChart;
 
+function makeNewObjects(){
+  new Product('bag', 'img/bag.jpg');
+  new Product('banana', 'img/banana.jpg');
+  new Product('bathroom', 'img/bathroom.jpg');
+  new Product('boots', 'img/boots.jpg');
+  new Product('breakfast', 'img/breakfast.jpg');
+  new Product('bubblegum', 'img/bubblegum.jpg');
+  new Product('chair', 'img/chair.jpg');
+  new Product('dog duck', 'img/dog-duck.jpg');
+  new Product('dragon', 'img/dragon.jpg');
+  new Product('monster', 'img/monster.jpg');
+  new Product('pen', 'img/pen.jpg');
+  new Product('pet sweep', 'img/pet-sweep.jpg');
+  new Product('scissors', 'img/scissors.jpg');
+  new Product('shark', 'img/shark.jpg');
+  new Product('sweep', 'img/sweep.jpg');
+  new Product('tauntaun', 'img/tauntaun.jpg');
+  new Product('unicorn', 'img/unicorn.jpg');
+  new Product('usb', 'img/usb.jpg');
+  new Product('water can', 'img/water-can.jpg');
+  new Product('wine glass', 'img/wine-glass.jpg');
+}
 
+
+function handleLocalStorage(){
+    if (localStorage.getItem('userResults')) {
+     allProducts = JSON.parse(localStorage.getItem('userResults'));
+     console.log('local storage exists');
+  } else {
+    makeNewObjects();
+    console.log('local storage empty');
+  }
+}
 
 function Product(name, path) {
   this.name = name;
@@ -18,26 +50,6 @@ function Product(name, path) {
   allProducts.push(this);
 }
 
-new Product('bag', 'img/bag.jpg');
-new Product('banana', 'img/banana.jpg');
-new Product('bathroom', 'img/bathroom.jpg');
-new Product('boots', 'img/boots.jpg');
-new Product('breakfast', 'img/breakfast.jpg');
-new Product('bubblegum', 'img/bubblegum.jpg');
-new Product('chair', 'img/chair.jpg');
-new Product('dog duck', 'img/dog-duck.jpg');
-new Product('dragon', 'img/dragon.jpg');
-new Product('monster', 'img/monster.jpg');
-new Product('pen', 'img/pen.jpg');
-new Product('petSweep', 'img/pet-sweep.jpg');
-new Product('scissors', 'img/scissors.jpg');
-new Product('shark', 'img/shark.jpg');
-new Product('sweep', 'img/sweep.jpg');
-new Product('tauntaun', 'img/tauntaun.jpg');
-new Product('unicorn', 'img/unicorn.jpg');
-new Product('usb', 'img/usb.jpg');
-new Product('water can', 'img/water-can.jpg');
-new Product('wine glass', 'img/wine-glass.jpg');
 
 var randomNumArray = [];
 
@@ -117,6 +129,8 @@ function handleClick(event) {
   for (var i = 0; i < allProducts.length; i++) {
     if(event.target.alt === allProducts[i].name) {
       allProducts[i].clicks += 1;
+      localStorage.setItem('userResults', JSON.stringify(allProducts));
+      updateChartArrays();
     }
   }
 
@@ -124,17 +138,17 @@ function handleClick(event) {
   totalClicks += 1;
 
 
+
   //stops the cycle at 25
-  if (totalClicks > 5){
+  if (totalClicks > 4){
     photoSection.removeEventListener('click', handleClick);
-    console.log('max number of clicks reached');
     resultsButton.hidden = false;
     return;
   }
 
   previouslyShown = randomNumArray;
   displayThreeImages();
-  updateChartArrays();
+
 }
 
 function handleResultsButton() {
@@ -143,7 +157,10 @@ function handleResultsButton() {
   resultsButton.style.visibility = 'hidden';
 }
 
-// Executing code below
+
+
+
+handleLocalStorage();
 displayThreeImages();
 
 var photoSection = document.getElementById('photoSection');
@@ -151,6 +168,8 @@ photoSection.addEventListener('click', handleClick);
 
 var resultsButton = document.getElementById('resultsButton');
 resultsButton.addEventListener('click', handleResultsButton);
+
+
 
 
 ////////chart JS part//////
@@ -165,11 +184,9 @@ function updateChartArrays() {
     clicksArray[i] = allProducts[i].clicks;
     imageNamesArray[i] = allProducts[i].name;
     totalViewsArray[i] = allProducts[i].views;
-    console.log(imageNamesArray[i] + ' was clicked ' + clicksArray[i] + ' times and viewed ' + totalViewsArray[i] + ' times.');
-    console.log(totalViewsArray);
   }
-
 }
+
 
 var resultsDisplay = document.getElementById('resultsDisplay').getContext('2d');
 
