@@ -223,7 +223,7 @@ var data = {
                'black',
                'black',
                'black',
-               'black',  
+               'black',
            ],
            borderWidth: 10,
            data: clicksArray,
