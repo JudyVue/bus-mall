@@ -124,7 +124,7 @@ function handleClick(event) {
 
 
   //stops the cycle at 25
-  if (totalClicks > 5) {
+  if (totalClicks > 25) {
     photoSection.removeEventListener('click', handleClick);
     console.log('max number of clicks reached');
     resultsButton.hidden = false;
