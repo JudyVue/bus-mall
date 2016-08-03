@@ -20,7 +20,7 @@ section {
   border-radius: 5px;
 }
 
-canvas {
+#resultsDisplay {
   width: 1000px;
   height: 700px;
 }
