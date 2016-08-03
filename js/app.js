@@ -1,12 +1,13 @@
 'use strict.';
 
-//global variable to grab the canvas from html
-var resultsDisplay = document.getElementById('resultsDisplay').getContext('2d');
+
+
 
 
 var allProducts = [];
 
 var totalClicks = 0;
+
 
 function Product(name, path) {
   this.name = name;
@@ -23,7 +24,7 @@ new Product('boots', 'img/boots.jpg');
 new Product('breakfast', 'img/breakfast.jpg');
 new Product('bubblegum', 'img/bubblegum.jpg');
 new Product('chair', 'img/chair.jpg');
-new Product('dogDuck', 'img/dog-duck.jpg');
+new Product('dog duck', 'img/dog-duck.jpg');
 new Product('dragon', 'img/dragon.jpg');
 new Product('monster', 'img/monster.jpg');
 new Product('pen', 'img/pen.jpg');
@@ -34,8 +35,8 @@ new Product('sweep', 'img/sweep.jpg');
 new Product('tauntaun', 'img/tauntaun.jpg');
 new Product('unicorn', 'img/unicorn.jpg');
 new Product('usb', 'img/usb.jpg');
-new Product('waterCan', 'img/water-can.jpg');
-new Product('wineGlass', 'img/wine-glass.jpg');
+new Product('water can', 'img/water-can.jpg');
+new Product('wine glass', 'img/wine-glass.jpg');
 
 var randomNumArray = [];
 
@@ -115,16 +116,15 @@ function handleClick(event) {
   for (var i = 0; i < allProducts.length; i++) {
     if(event.target.alt === allProducts[i].name) {
       allProducts[i].clicks += 1;
-      console.log(allProducts[i].name + ' has ' + allProducts[i].clicks + ' clicks');
     }
   }
 
   //increments clicks
   totalClicks += 1;
-  console.log('There have been ' + totalClicks + ' total clicks');
+
 
   //stops the cycle at 25
-  if (totalClicks > 24) {
+  if (totalClicks > 5) {
     photoSection.removeEventListener('click', handleClick);
     console.log('max number of clicks reached');
     resultsButton.hidden = false;
@@ -133,10 +133,13 @@ function handleClick(event) {
 
   previouslyShown = randomNumArray;
   displayThreeImages();
+  updateChartArrays();
 }
 
 function handleResultsButton() {
-  alert('this is when you draw the chart');
+  // alert('this is when you draw the chart');
+  drawChart();
+  resultsButton.style.visibility = 'hidden';
 }
 
 // Executing code below
@@ -147,3 +150,99 @@ photoSection.addEventListener('click', handleClick);
 
 var resultsButton = document.getElementById('resultsButton');
 resultsButton.addEventListener('click', handleResultsButton);
+
+
+////////chart JS part//////
+//chart functions adapted from demo code on class Github
+//global variable to grab the canvas from html
+
+//pushes # of clicks and pic names into arrays
+
+//vars to put votes and names of pictures for chart purposes
+var clicksArray = [];
+var imageNamesArray = [];
+var chartDrawn = false; //not sure why this is here, but it's in sample code, so using it
+var voteChart;
+
+function updateChartArrays() {
+  for (var i=0; i < allProducts.length; i++) {
+    clicksArray[i] = allProducts[i].clicks;
+    imageNamesArray[i] = allProducts[i].name;
+
+    console.log(imageNamesArray[i] + ' was clicked ' + clicksArray[i] + ' times.');
+  }
+
+}
+
+var resultsDisplay = document.getElementById('resultsDisplay').getContext('2d');
+
+var data = {
+  labels: imageNamesArray,
+  datasets: [
+       {
+           label: "Total Clicks per Picture",
+           backgroundColor: [
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+           ],
+           borderColor: [
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+               'black',
+           ],
+           borderWidth: 10,
+           data: clicksArray,
+       }
+   ]
+};
+
+function drawChart() {
+  var ctx = resultsDisplay;
+  voteChart = new Chart(ctx,{
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false
+    },
+    scales: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  });
+}
