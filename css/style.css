@@ -1,3 +1,16 @@
+body {
+  background-color: #FF6347;
+}
+
+* {
+  font-family: 'Inconsolata', monospace;
+  text-align: center;
+}
+
+table tr th{
+  outline: solid 1px orange;
+}
+
 img {
   width: 200px;
   height: 170px;
@@ -5,19 +18,22 @@ img {
 }
 
 section {
+  margin: 0 auto;
   position: relative;
   border-style: none;
   width: 1000px;
   height: 200px;
+  text-align: center;
 }
 
 #resultsButton {
   position: absolute;
-  margin-top: 0px;
-  height: 100px;
+  margin: 0 auto;
+  height: 50px;
   font-size: 20px;
-  background-color: grey;
+  background-color: #DEB887;
   border-radius: 5px;
+  text-align: center;
 }
 
 #resultsDisplay {

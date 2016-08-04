@@ -140,7 +140,7 @@ function handleClick(event) {
 
 
   //stops the cycle at 25
-  if (totalClicks > 4){
+  if (totalClicks > 5){
     photoSection.removeEventListener('click', handleClick);
     resultsButton.hidden = false;
     return;
@@ -169,7 +169,19 @@ photoSection.addEventListener('click', handleClick);
 var resultsButton = document.getElementById('resultsButton');
 resultsButton.addEventListener('click', handleResultsButton);
 
-
+//function to calculate click/views percentage
+function calcPercentage(){
+  for (var i=0; i < allProducts.length; i++) {
+    var percentage;
+    if (allProducts[i].views === 0){
+      percentage = 0;
+    }
+    else {
+      percentage = parseInt(Math.floor((allProducts[i].clicks/allProducts[i].views)*100));
+    }
+    return percentage;
+  }
+}
 
 
 ////////chart JS part//////
