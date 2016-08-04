@@ -26,14 +26,16 @@ section {
   text-align: center;
 }
 
+
 #resultsButton {
+  margin-left: 100px;
   position: absolute;
-  margin: 0 auto;
   height: 50px;
   font-size: 20px;
   background-color: #DEB887;
   border-radius: 5px;
-  text-align: center;
+
+
 }
 
 #resultsDisplay {
