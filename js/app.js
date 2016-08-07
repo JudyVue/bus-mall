@@ -1,4 +1,4 @@
-'use strict.';
+'use strict';
 
 var allProducts = [];
 var totalClicks = 0;
@@ -6,7 +6,6 @@ var totalViewsArray = [];
 //vars to put votes and names of pictures for chart purposes
 var clicksArray = [];
 var imageNamesArray = [];
-var voteChart;
 
 function makeNewObjects(){
   new Product('bag', 'img/bag.jpg');
@@ -33,9 +32,9 @@ function makeNewObjects(){
 
 
 function handleLocalStorage(){
-    if (localStorage.getItem('userResults')) {
-     allProducts = JSON.parse(localStorage.getItem('userResults'));
-     console.log('local storage exists');
+  if (localStorage.getItem('userResults')) {
+    allProducts = JSON.parse(localStorage.getItem('userResults'));
+    console.log('local storage exists');
   } else {
     makeNewObjects();
     console.log('local storage empty');
@@ -171,17 +170,18 @@ resultsButton.addEventListener('click', handleResultsButton);
 
 //function to calculate click/views percentage
 function calcPercentage(){
-  for (var i=0; i < allProducts.length; i++) {
+  for (var i = 0; i < allProducts.length; i++) {
     var percentage;
     if (allProducts[i].views === 0){
       percentage = 0;
     }
     else {
-      percentage = parseInt(Math.floor((allProducts[i].clicks/allProducts[i].views)*100));
+      percentage = parseInt(Math.floor((allProducts[i].clicks / allProducts[i].views) * 100));
     }
     return percentage;
   }
 }
+calcPercentage();
 
 
 ////////chart JS part//////
@@ -192,7 +192,7 @@ function calcPercentage(){
 
 
 function updateChartArrays() {
-  for (var i=0; i < allProducts.length; i++) {
+  for (var i = 0; i < allProducts.length; i++) {
     clicksArray[i] = allProducts[i].clicks;
     imageNamesArray[i] = allProducts[i].name;
     totalViewsArray[i] = allProducts[i].views;
@@ -205,56 +205,56 @@ var resultsDisplay = document.getElementById('resultsDisplay').getContext('2d');
 var data = {
   labels: imageNamesArray,
   datasets: [
-       {
-           label: "Total Clicks per Picture",
-           backgroundColor: [
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-           ],
-           borderColor: [
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-               'black',
-           ],
-           borderWidth: 10,
-           data: clicksArray,
-       }
-   ]
+    {
+      label: 'Total Clicks per Pictures',
+      backgroundColor: [
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+      ],
+      borderColor: [
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+        'black',
+      ],
+      borderWidth: 10,
+      data: clicksArray,
+    }
+  ]
 };
 
 function drawChart() {
