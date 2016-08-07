@@ -11,9 +11,14 @@ table tr th{
   outline: solid 1px orange;
 }
 
+#hotair {
+  width: 1000px;
+  height: 700px;
+}
+
 img {
-  width: 200px;
-  height: 170px;
+  width: 300px;
+  height: 270px;
 
 }
 
@@ -33,7 +38,6 @@ section {
   font-size: 20px;
   background-color: #DEB887;
   border-radius: 5px;
-  text-align: center;
 }
 
 #resultsDisplay {
