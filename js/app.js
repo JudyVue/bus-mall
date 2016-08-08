@@ -33,8 +33,8 @@ function makeNewObjects(){
 
 function handleLocalStorage(){
   if (localStorage.getItem('userResults')) {
-   allProducts = JSON.parse(localStorage.getItem('userResults'));
-   console.log('local storage exists');
+    allProducts = JSON.parse(localStorage.getItem('userResults'));
+    console.log('local storage exists');
   } else {
     makeNewObjects();
     console.log('local storage empty');
@@ -139,9 +139,10 @@ function handleClick(event) {
 
 
   //stops the cycle at 25
-  if (totalClicks > 25){
+  if (totalClicks > 4){
     photoSection.removeEventListener('click', handleClick);
     resultsButton.hidden = false;
+    resultsButton.style.display = 'block';
     return;
   }
 
@@ -151,6 +152,7 @@ function handleClick(event) {
 }
 
 function handleResultsButton() {
+  // alert('this is when you draw the chart');
   drawChart();
   resultsButton.style.visibility = 'hidden';
 }
@@ -169,7 +171,7 @@ resultsButton.addEventListener('click', handleResultsButton);
 
 //function to calculate click/views percentage
 function calcPercentage(){
-  for (var i = 0 ; i < allProducts.length ; i ++) {
+  for (var i = 0; i < allProducts.length; i++) {
     var percentage;
     if (allProducts[i].views === 0){
       percentage = 0;
@@ -180,6 +182,7 @@ function calcPercentage(){
     return percentage;
   }
 }
+calcPercentage();
 
 
 ////////chart JS part//////
@@ -195,7 +198,7 @@ function updateChartArrays() {
     imageNamesArray[i] = allProducts[i].name;
     totalViewsArray[i] = allProducts[i].views;
   }
-
+}
 
 
 var resultsDisplay = document.getElementById('resultsDisplay').getContext('2d');
@@ -204,7 +207,7 @@ var data = {
   labels: imageNamesArray,
   datasets: [
     {
-      label: 'Total Clicks per Picture',
+      label: 'Total Clicks per Pictures',
       backgroundColor: [
         'black',
         'black',
@@ -268,5 +271,5 @@ function drawChart() {
         beginAtZero: true
       }
     }]
- });
-}                           
+  });
+}

@@ -12,8 +12,8 @@ table tr th{
 }
 
 #hotair {
-  width: 1000px;
-  height: 700px;
+  width: 700px;
+  height: 500px;
 }
 
 img {
@@ -32,9 +32,10 @@ section {
 }
 
 #resultsButton {
+  width: 200px;
+  height: 50px;
   position: absolute;
   margin: 0 auto;
-  height: 50px;
   font-size: 20px;
   background-color: #DEB887;
   border-radius: 5px;
@@ -43,4 +44,10 @@ section {
 #resultsDisplay {
   width: 1000px;
   height: 700px;
+}
+
+canvas {
+  margin-top: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
